@@ -9,8 +9,8 @@ Passwd=postgres
 ClientEncoding=UTF-8
 SearchType=1
 QueryCount=SELECT COUNT(distinct t.qualifier) AS a FROM record t 
-QuerySearch=SELECT COUNT(distinct t.qualifier) AS a FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier WHERE 
-QueryPresent=SELECT t.qualifier,b.name,b.type,b.lang FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier WHERE 
+QuerySearch=SELECT COUNT(distinct t.qualifier) AS a FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier LEFT OUTER JOIN document bdocstart ON b.begin_document_id=bdocstart.id LEFT OUTER JOIN document bdocend ON b.end_document_id=bdocend.id LEFT OUTER JOIN location l ON t.qualifier=l.qualifier LEFT OUTER JOIN document ldocstart ON l.begin_document_id=ldocstart.id LEFT OUTER JOIN document ldocend ON l.end_document_id=ldocend.id WHERE 
+QueryPresent=SELECT t.qualifier,b.name,b.type,b.lang FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier LEFT OUTER JOIN document bdocstart ON b.begin_document_id=bdocstart.id LEFT OUTER JOIN document bdocend ON b.end_document_id=bdocend.id LEFT OUTER JOIN location l ON t.qualifier=l.qualifier LEFT OUTER JOIN document ldocstart ON l.begin_document_id=ldocstart.id LEFT OUTER JOIN document ldocend ON l.end_document_id=ldocend.id WHERE 
 
 [Env]
 NLS_LANG=RUSSIAN_RUSSIA.CL8MSWIN1251
@@ -20,9 +20,12 @@ Bib-1=Attr_Bib1
 XD-1=Attr_Xd1
 ZTHES-attset=Attr_Zthes
 Util-attset=Attr_Util
+CIP-1=Attr_Cip1
 
 [Attr_Bib1]
 default=1:4;2:3;3:3;4:2;5:100;6:3;
+
+# Название терма
 1:4;2:3;3:*;4:1,2,108;5:1;6:*;= UPPER(b.name) like UPPER('$term$%')
 1:4;2:3;3:*;4:1,2,108;5:2;6:*;= UPPER(b.name) like UPPER('%$term$')
 1:4;2:3;3:*;4:1,2,108;5:3;6:*;= UPPER(b.name) like UPPER('%$term$%')
@@ -50,6 +53,8 @@ default=1:4;2:3;3:3;4:2;5:100;6:3;
 
 [Attr_Xd1]
 default=1:1;2:3;3:3;4:2;5:100;6:3;
+
+# Название терма
 1:1;2:3;3:*;4:1,2,108;5:1;6:*;= UPPER(b.name) like UPPER('$term$%')
 1:1;2:3;3:*;4:1,2,108;5:2;6:*;= UPPER(b.name) like UPPER('%$term$')
 1:1;2:3;3:*;4:1,2,108;5:3;6:*;= UPPER(b.name) like UPPER('%$term$%')
@@ -57,10 +62,14 @@ default=1:1;2:3;3:3;4:2;5:100;6:3;
 
 [Attr_Zthes]
 default=1:1;2:3;3:3;4:108;5:100;6:3;
+
+# Квалификатор терма
 1:1;2:3;3:*;4:*;5:100;6:*;= t.qualifier = '$term$'
 1:1;2:3;3:*;4:*;5:1;6:*;= t.qualifier = '$term$%'
 1:1;2:3;3:*;4:*;5:2;6:*;= t.qualifier = '$%term$'
 1:1;2:3;3:*;4:*;5:3;6:*;= t.qualifier = '$%term$%'
+
+# Тип терма
 1:2;2:3;3:*;4:*;5:100;6:*;= UPPER(b.type) = UPPER('$term$')
 1:2;2:3;3:*;4:*;5:1;6:*;= UPPER(b.type) like UPPER('$term$%')
 1:2;2:3;3:*;4:*;5:2;6:*;= UPPER(b.type) like UPPER('$%term$')
@@ -68,7 +77,45 @@ default=1:1;2:3;3:3;4:108;5:100;6:3;
 
 [Attr_Util]
 default=1:3;2:3;3:3;4:2;5:100;6:3;
-1:3;2:3;3:*;4:2;5:100;6:*;= UPPER(b.lang) = UPPER('$term$%')
+
+# Язык названия
+1:3;2:3;3:*;4:2;5:100;6:*;= UPPER(b.lang) = UPPER('$term$')
+
+[Attr_Cip1]
+default=1:201;2:3;3:3;4:2;5:100;6:3;
+
+# Тип геометрического объекта
+1:201;2:3;3:*;4:2;5:100;6:*;= UPPER(l.location_type) = UPPER('$term$')
+
+# Дата начала действия определения геометрии
+1:2072;2:1;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) < to_date('$term$','YYYY')
+1:2072;2:2;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) <= to_date('$term$','YYYY')
+1:2072;2:3;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) = to_date('$term$','YYYY')
+1:2072;2:4;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) >= to_date('$term$','YYYY')
+1:2072;2:5;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) > to_date('$term$','YYYY')
+1:2072;2:6;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) != to_date('$term$','YYYY')
+
+1:2072;2:1;3:*;4:100;5:100;6:*;= bdocstart.document_date < date '$term$'
+1:2072;2:2;3:*;4:100;5:100;6:*;= bdocstart.document_date <= date '$term$'
+1:2072;2:3;3:*;4:100;5:100;6:*;= bdocstart.document_date = date '$term$'
+1:2072;2:4;3:*;4:100;5:100;6:*;= bdocstart.document_date >= date '$term$'
+1:2072;2:5;3:*;4:100;5:100;6:*;= bdocstart.document_date > date '$term$'
+1:2072;2:6;3:*;4:100;5:100;6:*;= bdocstart.document_date != date '$term$'
+
+# Дата окончания действия определения геометрии
+1:2073;2:1;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) < to_date('$term$','YYYY')
+1:2073;2:2;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) <= to_date('$term$','YYYY')
+1:2073;2:3;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) = to_date('$term$','YYYY')
+1:2073;2:4;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) >= to_date('$term$','YYYY')
+1:2073;2:5;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) > to_date('$term$','YYYY')
+1:2073;2:6;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) != to_date('$term$','YYYY')
+
+1:2073;2:1;3:*;4:100;5:100;6:*;= bdocend.document_date < date '$term$'
+1:2073;2:2;3:*;4:100;5:100;6:*;= bdocend.document_date <= date '$term$'
+1:2073;2:3;3:*;4:100;5:100;6:*;= bdocend.document_date = date '$term$'
+1:2073;2:4;3:*;4:100;5:100;6:*;= bdocend.document_date >= date '$term$'
+1:2073;2:5;3:*;4:100;5:100;6:*;= bdocend.document_date > date '$term$'
+1:2073;2:6;3:*;4:100;5:100;6:*;= bdocend.document_date != date '$term$'
 
 [Schema]
 default=Zthes-schema
