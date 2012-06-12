@@ -1,0 +1,93 @@
+#
+#   Для базы данных Postgres dspace
+#	Elements B
+#
+<rusmarc>
+	<mrk len="24">
+		<m_0_4 len="5">00000</m_0_4>
+		<m_5_5 len="1">n</m_5_5>
+		<m_6_6 len="1">a</m_6_6>
+		<m_7_7 len="1">m</m_7_7>
+		<m_8_8 len="1">#</m_8_8>
+		<m_9_9 len="1">#</m_9_9>
+		<m_10_10 len="1">2</m_10_10>
+		<m_11_11 len="1">2</m_11_11>
+		<m_12_16 len="5">00000</m_12_16>
+		<m_17_17 len="1">#</m_17_17>
+		<m_18_18 len="1">#</m_18_18>
+		<m_19_19 len="1">#</m_19_19>
+		<m_20_23 len="4">450#</m_20_23>
+	</mrk>
+
+	<001>ict/dspace/$r.item_id$</001>
+
+
+	<101>
+		<0#>
+			<a len="3">eng</a>
+		</0#>
+	</101>
+
+	<105>
+		<##>
+			<a>
+				<p105_0_3 len="4">y|||</p105_0_3>
+				<p105_4_7 len="4">||||</p105_4_7>
+				<p105_8_8 len="1">0</p105_8_8>
+				<p105_9_9 len="1">0</p105_9_9>
+				<p105_10_10 len="1">0</p105_10_10>
+				<p105_11_11 len="1">y</p105_11_11>
+				<p105_12_12 len="1">y</p105_12_12>
+			</a>
+		</##>
+	</105>
+
+	<$ sql tit select text_value from metadatavalue where item_id = $r.item_id$ and metadata_field_id=64 $>
+	<$ for tit $>
+	<200>
+		<1#>
+			<a>$tit.text_value$</a>
+		</1#>
+	</200>
+	<$ close tit $>
+
+
+
+	<$ sql pu select text_value from metadatavalue where item_id = $r.item_id$ and metadata_field_id=39 $>
+	<$ for pu $>
+	<210>
+		<##>
+			<a>$pu.city$</a>
+			<c>$pu.text_value$</c>
+			<d>$r.pdate$</d>
+		</##>
+	</210>
+	<$ close pu $>
+
+
+	<$ sql sub select text_value from metadatavalue where item_id = $r.item_id$ and metadata_field_id=57 $>
+	<$ for sub $>
+	<606>
+		<##>
+			<a>$sub.text_value$</a>
+		</##>
+	</606>
+	<$ close sub $>
+
+
+	<$ sql au select text_value from metadatavalue where item_id = $r.item_id$ and metadata_field_id=3 $>
+	<$ for au $>
+	<700>
+		<##>
+			<a>$au.text_value$</a>
+		</##>
+	</700>
+	<$ close au $>
+
+
+	<899>
+		<##>
+			<b>Тестовая база dspace для Postgresql 8.3, ИВТ СО РАН, 2009 </b>
+		</##>
+	</899>
+</rusmarc>

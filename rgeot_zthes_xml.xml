@@ -1,0 +1,49 @@
+<zthes>
+	<local-control-number> $r.qualifier$ </local-control-number>
+	<termQualifier> $r.qualifier$ </termQualifier>
+	<language>$r.lang$</language>
+	<Title> $r.name$ </Title>
+	<termType>$r.type$</termType>
+	<Description>  </Description>		
+<!--
+	<$ sql see select code=a.code,term=a.term,rtype='SEE' from uiggm.dbo.msc2000 a, uiggm.dbo.msc2000c b where b.codep='$r.code$' and a.code=b.code  and b.type = 'SEE' order by a.code $>
+	<$ for see $>
+	<relation>
+		<relationType> $see.rtype$ </relationType>
+		<local-control-number> $see.code$ </local-control-number>
+		<termQualifier> $see.code$ </termQualifier>
+		<Title> $see.term$ </Title>
+	</relation>
+	<$ close see $>
+
+	<$ sql bt select code=a.code,term=a.term,rtype='BT' from uiggm.dbo.msc2000 a where a.code='$r.code_bt$'  $>
+	<$ for bt $>
+	<relation>
+		<relationType> $bt.rtype$ </relationType>
+		<local-control-number> $bt.code$ </local-control-number>
+		<termQualifier> $bt.code$ </termQualifier>
+		<Title> $bt.term$ </Title>
+	</relation>
+	<$ close bt $>
+
+	<$ sql nt select code=a.code,term=a.term,rtype='NT' from uiggm.dbo.msc2000 a where a.code_bt='$r.code$' order by a.code  $>
+	<$ for nt $>
+	<relation>
+		<relationType> $nt.rtype$ </relationType>
+		<local-control-number> $nt.code$ </local-control-number>
+		<termQualifier> $nt.code$ </termQualifier>
+		<Title> $nt.term$ </Title>
+	</relation>
+	<$ close nt $>
+
+	<$ sql sa select code=a.code,term=a.term,rtype='SA' from uiggm.dbo.msc2000 a, uiggm.dbo.msc2000c b where b.codep='$r.code$' and a.code=b.code  and b.type = 'SEE_ALSO' $>
+	<$ for sa $>
+	<relation>
+		<relationType> $sa.rtype$ </relationType>
+		<local-control-number> $sa.code$ </local-control-number>
+		<termQualifier> $sa.code$ </termQualifier>
+		<Title> $sa.term$ </Title>
+	</relation>
+	<$ close sa $>
+-->
+</zthes>

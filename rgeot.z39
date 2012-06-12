@@ -1,0 +1,146 @@
+
+[DataBase]
+Host=localhost
+Port=5432
+Name=rgeot
+SqlName=rgeothes
+Login=postgres
+Passwd=postgres
+ClientEncoding=UTF-8
+SearchType=1
+QueryCount=SELECT COUNT(distinct t.qualifier) AS a FROM record t 
+QuerySearch=SELECT COUNT(distinct t.qualifier) AS a FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier WHERE 
+QueryPresent=SELECT t.qualifier,b.name,b.type,b.lang FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier WHERE 
+
+[Env]
+NLS_LANG=RUSSIAN_RUSSIA.CL8MSWIN1251
+
+[SearchAttSet]
+Bib-1=Attr_Bib1
+XD-1=Attr_Xd1
+ZTHES-attset=Attr_Zthes
+Util-attset=Attr_Util
+
+[Attr_Bib1]
+default=1:4;2:3;3:3;4:2;5:100;6:3;
+1:4;2:3;3:*;4:1,2,108;5:1;6:*;= UPPER(b.name) like UPPER('$term$%')
+1:4;2:3;3:*;4:1,2,108;5:2;6:*;= UPPER(b.name) like UPPER('%$term$')
+1:4;2:3;3:*;4:1,2,108;5:3;6:*;= UPPER(b.name) like UPPER('%$term$%')
+1:4;2:3;3:*;4:1,2,108;5:100;6:*;= UPPER(b.name) = UPPER('$term$')
+#1:1003;2:3;3:*;4:1,2,108;5:1;6:*;= t.id in (select a.id_pub FROM pub2auth a, author b  WHERE ( a.id_auth = b.id AND (UPPER(b.au_name) like UPPER('$term$%'))))
+#1:1003;2:3;3:*;4:1,2,108;5:2;6:*;= t.id in (select a.id_pub FROM pub2auth a, author b  WHERE ( a.id_auth = b.id AND (UPPER(b.au_name) like UPPER('%$term$'))))
+#1:1003;2:3;3:*;4:1,2,108;5:3;6:*;= t.id in (select a.id_pub FROM pub2auth a, author b  WHERE ( a.id_auth = b.id AND (UPPER(b.au_name) like UPPER('%$term$%'))))
+#1:1003;2:3;3:*;4:1,2,108;5:100;6:*;= t.id in (select a.id_pub FROM pub2auth a, author b  WHERE ( a.id_auth = b.id AND (UPPER(b.au_name) = UPPER('$term$'))))
+#1:31;2:3;3:*;4:1,2,108;5:1;6:*;= t.publ_date like '$term$%'
+#1:31;2:3;3:*;4:1,2,108;5:2;6:*;= t.publ_date like '%$term$'
+#1:31;2:3;3:*;4:1,2,108;5:3;6:*;= t.publ_date like '%$term$%'
+#1:31;2:3;3:*;4:1,2,108;5:100;6:*;= t.publ_date = '$term$'
+#1:31;2:1;3:*;4:4,109;5:100;6:*;= to_date(t.publ_date,'YYYY') < to_date('$term$','YYYY')
+#1:31;2:2;3:*;4:4,109;5:100;6:*;= to_date(t.publ_date,'YYYY') <= to_date('$term$','YYYY')
+#1:31;2:3;3:*;4:4,109;5:100;6:*;= to_date(t.publ_date,'YYYY') = to_date('$term$','YYYY')
+#1:31;2:4;3:*;4:4,109;5:100;6:*;= to_date(t.publ_date,'YYYY') >= to_date('$term$','YYYY')
+#1:31;2:5;3:*;4:4,109;5:100;6:*;= to_date(t.publ_date,'YYYY') > to_date('$term$','YYYY')
+#1:31;2:6;3:*;4:4,109;5:100;6:*;= to_date(t.publ_date,'YYYY') != to_date('$term$','YYYY')
+#1:12;2:1;3:*;4:*;5:100;6:*;= t.id < $term$
+#1:12;2:2;3:*;4:*;5:100;6:*;= t.id <= $term$
+#1:12;2:3;3:*;4:*;5:100;6:*;= t.id = $term$
+#1:12;2:4;3:*;4:*;5:100;6:*;= t.id >= $term$
+#1:12;2:5;3:*;4:*;5:100;6:*;= t.id > $term$
+#1:12;2:6;3:*;4:*;5:100;6:*;= t.id != $term$
+
+[Attr_Xd1]
+default=1:1;2:3;3:3;4:2;5:100;6:3;
+1:1;2:3;3:*;4:1,2,108;5:1;6:*;= UPPER(b.name) like UPPER('$term$%')
+1:1;2:3;3:*;4:1,2,108;5:2;6:*;= UPPER(b.name) like UPPER('%$term$')
+1:1;2:3;3:*;4:1,2,108;5:3;6:*;= UPPER(b.name) like UPPER('%$term$%')
+1:1;2:3;3:*;4:1,2,108;5:100;6:*;= UPPER(b.name) = UPPER('$term$')
+
+[Attr_Zthes]
+default=1:1;2:3;3:3;4:108;5:100;6:3;
+1:1;2:3;3:*;4:*;5:100;6:*;= t.qualifier = '$term$'
+1:1;2:3;3:*;4:*;5:1;6:*;= t.qualifier = '$term$%'
+1:1;2:3;3:*;4:*;5:2;6:*;= t.qualifier = '$%term$'
+1:1;2:3;3:*;4:*;5:3;6:*;= t.qualifier = '$%term$%'
+
+[Attr_Util]
+default=1:4;2:3;3:3;4:2;5:100;6:3;
+1:4;2:3;3:*;4:1,2,108;5:100;6:*;= t.qualifier = '$term$%'
+
+[Schema]
+default=Zthes-schema
+Zthes-schema=Zthes-schema
+RUSmarc=rusmarc
+CIMI-schema=cimi
+GILS-schema=gils
+Geo-schema=geo
+
+[RecordSyntax]
+default=xml
+USmarc=usmarc
+RUSmarc=rusmarc
+Unimarc=rusmarc
+SUTRS=sutrs
+GRS-1=~
+html=html
+XML=xml
+text-XML=xml
+rtf=rtf
+
+[usmarc]
+Type=shablon
+Shablon=./rgeot/rgeot.txt
+B=./rgeot/rgeot_usmarc_b.txt
+F=./rgeot/rgeot_usmarc_f.txt
+
+[Zthes-schema]
+Type=shablon
+Shablon=./rgeot/rgeot_zthes_xml.xml
+
+[rusmarc]
+Type=shablon
+Shablon=./rgeot/rgeot_rusmarc_f.txt
+
+[xml]
+Type=shablon
+Shablon=./rgeot/rgeot_zthes_xml.xml
+
+[sutrs]
+Type=table
+Shablon=./rgeot/rgeot_sutrs_f.txt
+F=./rgeot/rgeot_sutrs_f.txt
+B=./rgeot/rgeot_sutrs_b.txt
+
+[cimi]
+Type=shablon
+Default=./rgeot/rgeot_cimi.txt
+
+[gils]
+Type=shablon
+Default=./rgeot/rgeot_gils.txt
+
+[geo]
+Type=shablon
+Default=./rgeot/rgeot_geo.xml
+
+[rtf]
+Type=inner
+rec_beg=~ 
+rec_end=~  
+tag_beg=\pard\li%u\widctlpar\adjustright{\cf2\b{
+tag_end=: } }
+dat_beg=~
+dat_end=\par
+lev_beg=\par
+lev_end=~
+
+[html]
+Type=inner
+rec_beg=<table border=0 width="100%"><tr><td> 
+rec_end=</td></tr></table><br> 
+tag_beg=<FONT color=#8b0000><b>
+tag_end=:&nbsp;</b></FONT>
+dat_beg=&nbsp;
+dat_end=<br>
+lev_beg=<table border=0><tr><td width=15>&nbsp;</td><td>
+lev_end=</td></tr></table>
+
