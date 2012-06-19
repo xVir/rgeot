@@ -4,16 +4,30 @@
 	<language>$b.lang$</language>
 	<Title>$b.name$</Title>
 	<termType>$b.type$</termType>
-	<Description>  </Description>		
+	<Description></Description>		
 
 	<belongTo>$rr.record_to_qualifier$</belongTo>
     
+    <names>
+    <$ sql n SELECT n.name as name_field, n.type as type_field, n.lang as lang FROM name n where n.qualifier = r.qualifier $>
+	<$ for n $>
+		<name>
+			<name>$n.name_field$</name>
+			<language>$n.lang$</language>
+			<type>$n.type_field$</type>
+		</name>
+	<$ close n $>	
+    </names>	
+
    	<locations>
-   	<$ sql loc select point=l.location_point from location l where l.qualifier = r.qualifier $>
+   	<$ sql loc SELECT l.location_point[0] as lat, l.location_point[1] as long FROM location l where l.qualifier = r.qualifier $>
 	<$ for loc $>
-	<location>
-	    <point>$point$</point>	
-	</location>
+	<point>
+	    <latitude>$loc.lat$</latitude>
+	    <longitude>$loc.long$</longitude>
+	    <beginDocument></beginDocument>
+	    <endDocument></endDocument>
+	</point>
 	<$ close loc $>
    	</locatons>
 
