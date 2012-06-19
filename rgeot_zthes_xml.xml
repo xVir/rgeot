@@ -9,14 +9,14 @@
 	<belongTo>$rr.record_to_qualifier$</belongTo>
     
     <names>
-    <$ sql n SELECT n.name as name_field, n.type as type_field, n.lang as lang FROM name n where n.qualifier = r.qualifier $>
-	<$ for n $>
+    <$ sql name_record SELECT n.name as name_field, n.type as type_field, n.lang as lang FROM name n where n.qualifier = r.qualifier $>
+	<$ for name_record $>
 		<name>
-			<name>$n.name_field$</name>
-			<language>$n.lang$</language>
-			<type>$n.type_field$</type>
+			<name>$name_record.name_field$</name>
+			<language>$name_record.lang$</language>
+			<type>$name_record.type_field$</type>
 		</name>
-	<$ close n $>	
+	<$ close name_record $>	
     </names>	
 
    	<locations>
