@@ -10,7 +10,7 @@ ClientEncoding=UTF-8
 SearchType=1
 QueryCount=SELECT COUNT(distinct t.qualifier) AS a FROM record t 
 QuerySearch=SELECT COUNT(distinct t.qualifier) AS a FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier LEFT OUTER JOIN document bdocstart ON b.begin_document_id=bdocstart.id LEFT OUTER JOIN document bdocend ON b.end_document_id=bdocend.id LEFT OUTER JOIN location l ON t.qualifier=l.qualifier LEFT OUTER JOIN document ldocstart ON l.begin_document_id=ldocstart.id LEFT OUTER JOIN document ldocend ON l.end_document_id=ldocend.id LEFT OUTER JOIN record_reference rr ON t.belong_to_id=rr.id WHERE 
-QueryPresent=SELECT t.qualifier,b.name,b.type,b.lang FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier LEFT OUTER JOIN document bdocstart ON b.begin_document_id=bdocstart.id LEFT OUTER JOIN document bdocend ON b.end_document_id=bdocend.id LEFT OUTER JOIN location l ON t.qualifier=l.qualifier LEFT OUTER JOIN document ldocstart ON l.begin_document_id=ldocstart.id LEFT OUTER JOIN document ldocend ON l.end_document_id=ldocend.id LEFT OUTER JOIN record_reference rr ON t.belong_to_id=rr.id WHERE 
+QueryPresent=SELECT t.qualifier,b.name,b.type,b.lang, rr.record_to_qualifier FROM record t LEFT OUTER JOIN name b ON t.qualifier=b.qualifier LEFT OUTER JOIN document bdocstart ON b.begin_document_id=bdocstart.id LEFT OUTER JOIN document bdocend ON b.end_document_id=bdocend.id LEFT OUTER JOIN location l ON t.qualifier=l.qualifier LEFT OUTER JOIN document ldocstart ON l.begin_document_id=ldocstart.id LEFT OUTER JOIN document ldocend ON l.end_document_id=ldocend.id LEFT OUTER JOIN record_reference rr ON t.belong_to_id=rr.id WHERE 
 
 [Env]
 NLS_LANG=RUSSIAN_RUSSIA.CL8MSWIN1251

@@ -1,10 +1,22 @@
 <zthes>
 	<local-control-number> $r.qualifier$ </local-control-number>
 	<termQualifier> $r.qualifier$ </termQualifier>
-	<language>$r.lang$</language>
-	<Title> $r.name$ </Title>
-	<termType>$r.type$</termType>
+	<language>$b.lang$</language>
+	<Title>$b.name$</Title>
+	<termType>$b.type$</termType>
 	<Description>  </Description>		
+
+	<belongTo>$rr.record_to_qualifier$</belongTo>
+    <names></names>
+   	<locations>
+   	<$ sql loc select point=l.location_point from location l where l.qualifier = r.qualifier order by a.code $>
+	<$ for loc $>
+	<location>
+		
+	</location>
+	<$ close loc $>
+   	</locatons>
+
 <!--
 	<$ sql see select code=a.code,term=a.term,rtype='SEE' from uiggm.dbo.msc2000 a, uiggm.dbo.msc2000c b where b.codep='$r.code$' and a.code=b.code  and b.type = 'SEE' order by a.code $>
 	<$ for see $>
