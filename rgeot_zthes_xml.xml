@@ -7,12 +7,12 @@
 	<Description>  </Description>		
 
 	<belongTo>$rr.record_to_qualifier$</belongTo>
-    <names></names>
+    
    	<locations>
-   	<$ sql loc select point=l.location_point from location l where l.qualifier = r.qualifier order by a.code $>
+   	<$ sql loc select point=l.location_point from location l where l.qualifier = r.qualifier $>
 	<$ for loc $>
 	<location>
-		
+	    <point>$point$</point>	
 	</location>
 	<$ close loc $>
    	</locatons>
