@@ -1,12 +1,12 @@
 <zthes>
-	<local-control-number> $r.qualifier$ </local-control-number>
-	<termQualifier> $r.qualifier$ </termQualifier>
-	<language>$b.lang$</language>
-	<Title>$b.name$</Title>
-	<termType>$b.type$</termType>
+	<local-control-number> $qualifier$ </local-control-number>
+	<termQualifier> $qualifier$ </termQualifier>
+	<language>$lang$</language>
+	<Title>$name$</Title>
+	<termType>$type$</termType>
 	<Description></Description>		
-
-	<belongTo>$rr.record_to_qualifier$</belongTo>
+<!--
+	<belongTo>$record_to_qualifier$</belongTo>
     
     <names>
     <$ sql name_record SELECT n.name as name_field, n.type as type_field, n.lang as lang FROM name n where n.qualifier = r.qualifier $>
@@ -31,7 +31,7 @@
 	<$ close loc $>
    	</locatons>
 
-<!--
+
 	<$ sql see select code=a.code,term=a.term,rtype='SEE' from uiggm.dbo.msc2000 a, uiggm.dbo.msc2000c b where b.codep='$r.code$' and a.code=b.code  and b.type = 'SEE' order by a.code $>
 	<$ for see $>
 	<relation>

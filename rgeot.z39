@@ -52,6 +52,61 @@ default=1:4;2:3;3:3;4:2;5:100;6:3;
 #1:12;2:5;3:*;4:*;5:100;6:*;= t.id > $term$
 #1:12;2:6;3:*;4:*;5:100;6:*;= t.id != $term$
 
+#временно помещаем здесь маппинг для Attr_rgeothes
+
+# Тип геометрического объекта
+1:201;2:3;3:*;4:2;5:100;6:*;= UPPER(l.location_type) = UPPER('$term$')
+
+# Координаты геометрического объекта
+# Указана точка с соотношением пересечения
+1:2059;2:7;3:*;4:201;5:100;6:*;= l.location_point ~= point '$term$'
+# Регион должен находиться в точке (означает совпадение точек)
+1:2059;2:8;3:*;4:201;5:100;6:*;= l.location_point ~= point '$term$'
+# Указана точка которая должна находиться внутри региона
+1:2059;2:9;3:*;4:201;5:100;6:*;= l.location_point ~= point '$term$'
+# Указана точка которая должна находиться вне региона
+1:2059;2:10;3:*;4:201;5:100;6:*;= NOT (l.location_point ~= point '$term$')
+
+# Указан полигон с соотношением пересечения
+1:2059;2:7;3:*;4:202;5:100;6:*;= l.location_point <@ polygon '$term$'
+# Регион должен находиться в полигоне
+1:2059;2:8;3:*;4:202;5:100;6:*;= l.location_point <@ polygon '$term$'
+# Указан полигон который должен находиться внутри региона (невозможно для точки)
+#1:2059;2:9;3:*;4:202;5:100;6:*;= l.location_point 
+# Указан полигон который должен находиться вне региона
+1:2059;2:10;3:*;4:202;5:100;6:*;= NOT (l.location_point <@ polygon '$term$')
+
+# Дата начала действия названия
+1:2072;2:1;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) < to_date('$term$','YYYY')
+1:2072;2:2;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) <= to_date('$term$','YYYY')
+1:2072;2:3;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) = to_date('$term$','YYYY')
+1:2072;2:4;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) >= to_date('$term$','YYYY')
+1:2072;2:5;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) > to_date('$term$','YYYY')
+1:2072;2:6;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocstart.document_date) != to_date('$term$','YYYY')
+
+1:2072;2:1;3:*;4:100;5:100;6:*;= bdocstart.document_date < date '$term$'
+1:2072;2:2;3:*;4:100;5:100;6:*;= bdocstart.document_date <= date '$term$'
+1:2072;2:3;3:*;4:100;5:100;6:*;= bdocstart.document_date = date '$term$'
+1:2072;2:4;3:*;4:100;5:100;6:*;= bdocstart.document_date >= date '$term$'
+1:2072;2:5;3:*;4:100;5:100;6:*;= bdocstart.document_date > date '$term$'
+1:2072;2:6;3:*;4:100;5:100;6:*;= bdocstart.document_date != date '$term$'
+
+# Дата окончания действия названия
+1:2073;2:1;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) < to_date('$term$','YYYY')
+1:2073;2:2;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) <= to_date('$term$','YYYY')
+1:2073;2:3;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) = to_date('$term$','YYYY')
+1:2073;2:4;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) >= to_date('$term$','YYYY')
+1:2073;2:5;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) > to_date('$term$','YYYY')
+1:2073;2:6;3:*;4:4,109;5:100;6:*;= date_trunc('year', bdocend.document_date) != to_date('$term$','YYYY')
+
+1:2073;2:1;3:*;4:100;5:100;6:*;= bdocend.document_date < date '$term$'
+1:2073;2:2;3:*;4:100;5:100;6:*;= bdocend.document_date <= date '$term$'
+1:2073;2:3;3:*;4:100;5:100;6:*;= bdocend.document_date = date '$term$'
+1:2073;2:4;3:*;4:100;5:100;6:*;= bdocend.document_date >= date '$term$'
+1:2073;2:5;3:*;4:100;5:100;6:*;= bdocend.document_date > date '$term$'
+1:2073;2:6;3:*;4:100;5:100;6:*;= bdocend.document_date != date '$term$'
+
+
 [Attr_Xd1]
 default=1:1;2:3;3:3;4:2;5:100;6:3;
 
